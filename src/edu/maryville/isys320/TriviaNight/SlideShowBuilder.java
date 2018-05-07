@@ -51,12 +51,42 @@ public class SlideShowBuilder {
 			makeRoundSlide(ppt, defaultMaster, "Round " + (i+1));
 			for (int j = 0; j < 10; j++) {
 				makeSlide(ppt, defaultMaster, categories[i], questions[i * 10 + j], answers[i * 10 + j]);
+				makeQuestSlide(ppt, defaultMaster, categories[i], questions[i * 10 + j]);
+			}
+			makeRoundSlide(ppt, defaultMaster, "Answers to Round " + (i+1)); 
+			for (int j = 0; j < 10; j++) {
+				makeQuestSlide(ppt, defaultMaster, categories[i], questions[i * 10 + j]); 
+				makeSlide(ppt, defaultMaster, categories[i], questions[i * 10 + j], answers[i * 10 + j]); 
 			}
 		}
 		
 	    savePPTX(ppt, fileName);
+		
 	}
+		
 
+	private void makeQuestSlide(XMLSlideShow ppt, XSLFSlideMaster defaultMaster, String string, String string2) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public void buildRoundSlideShow(String[] categories, String[] questions, String[] answers, String fileName) {
+		XMLSlideShow ppt = new XMLSlideShow();
+		XSLFSlideMaster defaultMaster = ppt.getSlideMasters().get(0);
+		
+		for (int i = 0; i < 10; i++) {
+			makeRoundSlide(ppt, defaultMaster, "Round " + (i+1));
+			for (int j = 0; j < 10; j++) {
+				makeQuestSlide(ppt, defaultMaster, categories[j], questions[i]);
+			}
+			//added a loop for Answer Title slid for each round
+			makeRoundSlide(ppt, defaultMaster, "Answers to Round " + (i+1));  
+			for (int j = 0; j < 10; j++) {
+				makeQuestSlide(ppt, defaultMaster, categories[j], questions[i]); 
+				makeSlide(ppt, defaultMaster, categories[j], questions[i], answers[i]); 
+			}
+		}
+		
 	private static void makeRoundSlide(XMLSlideShow ppt, XSLFSlideMaster master, String round) {
 		XSLFSlideLayout titleSlide = master.getLayout(SlideLayout.SECTION_HEADER);
 		XSLFSlide slide = ppt.createSlide(titleSlide);

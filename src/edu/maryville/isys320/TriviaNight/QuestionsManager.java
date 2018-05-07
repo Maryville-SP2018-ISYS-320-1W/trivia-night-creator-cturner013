@@ -16,6 +16,7 @@ public class QuestionsManager {
 	public QuestionsManager(String categoryFolder) {
 		File fldr = new File(categoryFolder);
 		String[] files = fldr.list();
+		int questCount = 0;
 		
 		Collections.addAll(categories,files);
 		Collections.sort(categories);
@@ -28,6 +29,12 @@ public class QuestionsManager {
 					answers.add(fs.nextLine());
 					fs.nextLine();
 				}
+				if (questCount < 10)
+					
+						System.out.println("Category"+fileName + "has less than 10 questions");
+				else if (questCount > 10)
+					System.out.println("Category" + fileName + "has more than 10 questions");
+				questCount = 0;
 				fs.close();
 
 			} catch (FileNotFoundException e) {
